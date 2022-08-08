@@ -1,0 +1,94 @@
+<!doctype html>
+<html th:fragment="layout (template, menu)">
+
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
+
+    <title>PetClinic :: a Spring Framework demonstration</title>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+      <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+      <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet">
+      <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}"/>
+
+  </head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/}"><span></span></a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#main-navbar" aria-controls="navbarSupportedContent" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="main-navbar">
+                    <ul class="nav navbar-nav navbar-right me-auto">
+
+                        <li th:fragment="menuItem (path,active,title,glyph,text)" class="nav-item active" th:class="${active==menu ? 'active' : ''}">
+                            <a th:href="@{__${path}__}" th:title="${title}">
+                                <span th:class="'fa-thin  '+${glyph}" class="fa-thin fa-house" aria-hidden="true" aria-atomic="true"></span>
+                                <span th:text="${text}">Template</span>
+                            </a>
+                        </li>
+
+                        <li th:replace="::menuItem ('/','home','home page','fa-house','Home')" class="nav-item">
+                            <span class="fa-thin fa-house" aria-hidden="true"></span>
+                            <span>Home</span>
+                        </li>
+
+                        <li th:replace="::menuItem ('/owners/find','owners','find owners','fa-magnifying-glass','Find owners')" class="nav-item">
+                            <span class="fa-thin fa-magnifying-glass" aria-hidden="true"></span>
+                            <span>Find owners</span>
+                        </li>
+
+                        <li th:replace="::menuItem ('/vets.html','vets','veterinarians','fa-list','Veterinarians')" class="nav-item">
+                            <span class="fa-thin fa-list" aria-hidden="true"></span>
+                            <span>Veterinarians</span>
+                        </li>
+
+                        <li th:replace="::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','fa-triangle-exclamation','Error')" class="nav-item">
+                            <span class="fa-thin fa-triangle-exclamation" aria-hidden="true"></span>
+                            <span>Error</span>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="container xd-container">
+
+                <th:block th:include="${template}"/>
+
+                <br/>
+                <br/>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <img src="../static/resources/images/spring-pivotal-logo.png" th:src="@{/resources/images/spring-pivotal-logo.png}"
+                                 alt="Sponsored by Pivotal"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <script th:src="@{/webjars/font-awesome/js/all.js}"></script>
+
+</body>
+
+</html>
