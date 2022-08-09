@@ -1,6 +1,7 @@
 package com.oothan.springdev.petclinic.repositories;
 
 import com.oothan.springdev.petclinic.models.Owner;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
