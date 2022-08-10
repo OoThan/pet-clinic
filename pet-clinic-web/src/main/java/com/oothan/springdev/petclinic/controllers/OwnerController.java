@@ -29,11 +29,11 @@ public class OwnerController {
         dataBinder.setAllowedFields("id");
     }
 
-    @RequestMapping({"", "/", "/index", "/index.html"})
-    public String listOwners(Model model) {
-        model.addAttribute("owners", ownerService.findAll());
-        return "owners/index";
-    }
+//    @RequestMapping({"", "/", "/index", "/index.html"})
+//    public String listOwners(Model model) {
+//        model.addAttribute("owners", ownerService.findAll());
+//        return "owners/index";
+//    }
 
     @RequestMapping("/find")
     public String findOwners(Model model) {
