@@ -2,12 +2,14 @@ package com.oothan.springdev.petclinic.controllers;
 
 import com.oothan.springdev.petclinic.models.Owner;
 import com.oothan.springdev.petclinic.services.OwnerService;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,7 +27,7 @@ public class OwnerController {
 
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setAllowedFields("id");
+        dataBinder.setAllowedFields("id", "firstName", "lastName", "address", "city", "telephone", "pets");
     }
 
 //    @RequestMapping({"", "/", "/index", "/index.html"})
@@ -36,14 +38,14 @@ public class OwnerController {
 
     @RequestMapping("/find")
     public String findOwners(Model model) {
-        model.addAttribute("owner", Owner.builder().build());
+        model.addAttribute(Owner.builder().build());
         return "owners/find-owner";
     }
 
     @RequestMapping
-    public String processFindForm(@Valid Owner owner, BindingResult result, Model model) {
+    public String processFindForm(Owner owner, BindingResult result, Model model) {
 
-        System.out.println(owner.getId() + " " + owner.getLastName());
+        System.out.println(owner.getLastName());
         if (owner.getLastName() == null) {
             owner.setLastName("");
         }
@@ -92,7 +94,7 @@ public class OwnerController {
     }
 
     @PostMapping("/{ownerId}/edit")
-    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
+    public String processUpdateOwnerForm(Owner owner, BindingResult result,
                                          @PathVariable Long ownerId) {
         if (result.hasErrors()) {
             return VIEW_OWNER_CREATE_OR_UPDATE_FORM;
