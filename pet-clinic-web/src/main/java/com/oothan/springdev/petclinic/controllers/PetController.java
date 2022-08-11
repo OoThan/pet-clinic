@@ -48,7 +48,7 @@ public class PetController {
 
     @InitBinder("owner")
     public void initOwnerBinder(WebDataBinder dataBinder) {
-        dataBinder.setAllowedFields("id", "name", "petType", "owner", "birthDate", "visits");
+        dataBinder.setAllowedFields("id");
     }
 
     @GetMapping("/pets/new")
@@ -61,12 +61,14 @@ public class PetController {
     }
 
     @PostMapping("/pets/new")
-    public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
+    public String processCreationForm(@Valid Pet pet, BindingResult result, ModelMap model, @PathVariable String ownerId) {
+        Owner owner = ownerService.findById(Long.valueOf(ownerId));
         if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "already exists");
         }
-
+        System.out.println(owner.getId());
         owner.getPets().add(pet);
+        pet.setOwner(owner);
         if (result.hasErrors()) {
             model.put("pet", pet);
             return VIEW_PETS_CREATE_OR_UPDATE_FORM;
