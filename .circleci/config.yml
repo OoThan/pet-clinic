@@ -13,33 +13,33 @@ jobs:
 
       - image: circleci/openjdk:11-browsers-legacy
         environment:
-          DB_ROOT_USER: root
-          DB_URL: jdbc:mysql://localhost:3306/pet_clinic #farm indicates the name of the database
-          DB_DRIVER: com.mysql.cj.jdbc.Driver
-          DB_PASS: ""
+#          DB_ROOT_USER: root
+#          DB_URL: jdbc:mysql://localhost:3306/pet_clinic #farm indicates the name of the database
+#          DB_DRIVER: com.mysql.cj.jdbc.Driver
+#          DB_PASS: ""
           MAVEN_OPTS: -Xmx3200m
 
       # Speficy your version of MYSQL
-      - image: circleci/mysql:5.7
-        environment:
-          # Remember to always use passwords, and strong ones. Dont be like me.
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_ROOT_PASSWORD: ''
+#      - image: circleci/mysql:5.7
+#        environment:
+#          # Remember to always use passwords, and strong ones. Dont be like me.
+#          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+#          MYSQL_ROOT_PASSWORD: ''
 
     working_directory: ~/repo
 
 
     steps:
       - checkout
-      - run:
-          name: Wait for Database Connection
-          # preinstalled in circleci/* docker image
-          command: dockerize -wait tcp://localhost:3306 -timeout 1m
-      #install mysql client
-      #if default-mysql-client fails, try the old way "sudo apt-get install mysql-client"
-      - run: sudo apt-get install mysql-server
-      # create databases
-      - run: mysql -h 127.0.0.1 -u root -e "create database pet_clinic"
+#      - run:
+#          name: Wait for Database Connection
+#          # preinstalled in circleci/* docker image
+#          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+#      #install mysql client
+#      #if default-mysql-client fails, try the old way "sudo apt-get install mysql-client"
+#      - run: sudo apt-get install mysql-server
+#      # create databases
+#      - run: mysql -h 127.0.0.1 -u root -e "create database pet_clinic"
 
 
       - restore_cache:
