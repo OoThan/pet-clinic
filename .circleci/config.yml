@@ -34,7 +34,7 @@ services:
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=database
+      - MYSQL_DATABASE=pet_clinic
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
     ports:
@@ -45,7 +45,7 @@ services:
     ports:
       - 8091:8091
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/database?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/pet_clinic?autoReconnect=true&useSSL=false
     depends_on:
       - docker-mysql
 
