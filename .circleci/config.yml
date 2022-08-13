@@ -27,4 +27,4 @@ jobs:
 
           key: v1-dependencies-{{ checksum "pom.xm" }}
 
-      - run: mvn integration-test
+      - run: mvn test
