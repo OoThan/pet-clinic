@@ -5,15 +5,6 @@ jobs:
     docker:
       - image: circleci/openjdk:11-browsers-legacy
 
-      image: mysql:5.7
-        environment:
-          - MYSQL_ROOT_PASSWORD=root
-          - MYSQL_DATABASE=database
-          - MYSQL_USER=root
-          - MYSQL_PASSWORD=root
-        ports:
-          - 3307:3306
-
     working_directory: ~/repo
 
     environment:
@@ -37,6 +28,24 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xm" }}
 
       - run: mvn integration-test
+
+services:
+  docker-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3307:3306
+
+  app:
+    image: app:latest
+    ports:
+      - 8091:8091
+    depends_on:
+      - docker-mysql
 
 
 #orbs:
