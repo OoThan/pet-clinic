@@ -5,29 +5,29 @@ jobs:
     docker:
       - image: circleci/openjdk:11-browsers-legacy
 
-      working_directory: ~/repo
+    working_directory: ~/repo
 
-      environment:
-        MAVEN_OPTS: -Xmx3200m
+    environment:
+      MAVEN_OPTS: -Xmx3200m
 
-      steps:
-        - checkout
-        - restore_cache:
+    steps:
+      - checkout
+      - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
 
-        - run: mvn install -DskipTests
+      - run: mvn install -DskipTests
 
-        - run: mvn dependency:go-offline
+      - run: mvn dependency:go-offline
 
-        - save_cache:
-            paths:
-              - ~/.m2
+      - save_cache:
+          paths:
+            - ~/.m2
 
-              key: v1-dependencies-{{ checksum "pom.xm" }}
+          key: v1-dependencies-{{ checksum "pom.xm" }}
 
-        - run: mvn integration-test
+      - run: mvn integration-test
 
 
 #orbs:
