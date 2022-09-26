@@ -3,16 +3,18 @@ package com.oothan.springdev.petclinic.services.map;
 import com.oothan.springdev.petclinic.models.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.yaml.snakeyaml.tokens.FlowEntryToken;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OwnerMapServiceTest {
-
+public class PetMapServiceTest {
     OwnerMapService ownerMapService;
+
     final Long ownerId = 1L;
-    final String lastName = "John";
+    final String lastName = "Smith";
+
 
     @BeforeEach
     void setUp() {
@@ -22,8 +24,8 @@ class OwnerMapServiceTest {
 
     @Test
     void findAll() {
-        Set<Owner> owners = ownerMapService.findAll();
-        assertEquals(1, owners.size());
+        Set<Owner> ownerSet = ownerMapService.findAll();
+        assertEquals(ownerId, ownerSet.size());
     }
 
     @Test
@@ -35,8 +37,8 @@ class OwnerMapServiceTest {
     @Test
     void saveExistingId() {
         Long id = 2L;
-        Owner owner = Owner.builder().id(id).build();
-        Owner savedOwner = ownerMapService.save(owner);
+        Owner owner2 = Owner.builder().id(id).build();
+        Owner savedOwner = ownerMapService.save(owner2);
         assertEquals(id, savedOwner.getId());
     }
 
@@ -61,14 +63,14 @@ class OwnerMapServiceTest {
 
     @Test
     void findByLastName() {
-        Owner john = ownerMapService.findByLastName(lastName);
-        assertNotNull(john);
-        assertEquals(ownerId, john.getId());
+        Owner smith = ownerMapService.findByLastName(lastName);
+        assertNotNull(smith);
+        assertEquals(ownerId, smith.getId());
     }
 
     @Test
     void findByLastNameNotFound() {
-        Owner smith = ownerMapService.findByLastName("smith");
-        assertNull(smith);
+        Owner john = ownerMapService.findByLastName("John");
+        assertNull(john);
     }
 }
